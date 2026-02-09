@@ -10,27 +10,22 @@
     <div class="container">
         <h1>📝 Min Todo Liste</h1>
         <p class="subtitle">Supabase Demo</p>
-
         <!-- Legg til ny todo -->
         <div class="add-todo">
             <input
                 type="text"
                 id="todoInput"
                 placeholder="Skriv inn en ny oppgave..."
-                onkeypress="if(event.key === 'Enter') addTodo()"
             >
-            <button onclick="addTodo()">Legg til</button>
+            <button id="addButton">Legg til</button>
         </div>
-
         <!-- Liste over todos -->
         <div id="todoList" class="todo-list">
             <!-- Todos vil bli lagt til her dynamisk -->
         </div>
-
         <!-- Status melding -->
         <div id="status" class="status"></div>
     </div>
-
     <!-- Supabase JS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="app.js"></script>
