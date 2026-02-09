@@ -4,8 +4,8 @@
 const SUPABASE_URL = 'https://supabase.nopedal.me/'
 const SUPABASE_KEY = 'key'
 
-// Opprett Supabase klient
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+// Opprett Supabase klient (vil bli initialisert etter DOM er lastet)
+let supabase
 
 // ==========================================
 // TABELLNAVN - Endre dette til din tabell
@@ -158,6 +158,9 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log('App startet!')
     console.log('Supabase URL:', SUPABASE_URL)
     console.log('Tabellnavn:', TABLE_NAME)
+
+    // Initialiser Supabase klient
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
     // Sjekk om Supabase er konfigurert
     if (SUPABASE_URL === 'DIN_SUPABASE_URL_HER' || SUPABASE_KEY === 'DIN_SUPABASE_ANON_KEY_HER') {
