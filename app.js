@@ -163,5 +163,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addButton) {
         addButton.addEventListener('click', addTodo)
     }
-
-
+}
