@@ -17,25 +17,24 @@ const TABLE_NAME = 'todos'  // Navn på tabellen du lager i Supabase
 // ==========================================
 
 // Hent alle todos fra Supabase (READ)
-async function getTodos() {
-    try {
-        const { data, error } = await supabase
-            .from(TABLE_NAME)
-            .select('*')
-            .order('created_at', { ascending: false })
-
-        if (error) throw error
-
-        displayTodos(data)
-        showStatus('Todos lastet inn!', 'success')
-    } catch (error) {
-        console.error('Feil ved henting av todos:', error)
-        showStatus('Feil ved lasting av todos: ' + error.message, 'error')
-    }
+function getTodos() {
+    return supabase
+        .from(TABLE_NAME)
+        .select('*')
+        .order('created_at', { ascending: false })
+        .then(({ data, error }) => {
+            if (error) throw error
+            displayTodos(data)
+            showStatus('Todos lastet inn!', 'success')
+        })
+        .catch(error => {
+            console.error('Feil ved henting av todos:', error)
+            showStatus('Feil ved lasting av todos: ' + error.message, 'error')
+        })
 }
 
 // Legg til ny todo i Supabase (CREATE)
-async function addTodo() {
+function addTodo() {
     const input = document.getElementById('todoInput')
     const todoText = input.value.trim()
 
@@ -44,67 +43,70 @@ async function addTodo() {
         return
     }
 
-    try {
-        const { data, error } = await supabase
-            .from(TABLE_NAME)
-            .insert([
-                {
-                    title: todoText,
-                    completed: false
-                }
-            ])
-            .select()
-
-        if (error) throw error
-
-        input.value = ''
-        await getTodos()
-        showStatus('Todo lagt til!', 'success')
-    } catch (error) {
-        console.error('Feil ved legging til av todo:', error)
-        showStatus('Feil ved legging til: ' + error.message, 'error')
-    }
+    supabase
+        .from(TABLE_NAME)
+        .insert([
+            {
+                title: todoText,
+                completed: false
+            }
+        ])
+        .select()
+        .then(({ data, error }) => {
+            if (error) throw error
+            input.value = ''
+            return getTodos()
+        })
+        .then(() => {
+            showStatus('Todo lagt til!', 'success')
+        })
+        .catch(error => {
+            console.error('Feil ved legging til av todo:', error)
+            showStatus('Feil ved legging til: ' + error.message, 'error')
+        })
 }
 
 // Oppdater todo status i Supabase (UPDATE)
-async function toggleTodo(id, currentStatus) {
-    try {
-        const { data, error } = await supabase
-            .from(TABLE_NAME)
-            .update({ completed: !currentStatus })
-            .eq('id', id)
-            .select()
-
-        if (error) throw error
-
-        await getTodos()
-        showStatus('Todo oppdatert!', 'success')
-    } catch (error) {
-        console.error('Feil ved oppdatering av todo:', error)
-        showStatus('Feil ved oppdatering: ' + error.message, 'error')
-    }
+function toggleTodo(id, currentStatus) {
+    supabase
+        .from(TABLE_NAME)
+        .update({ completed: !currentStatus })
+        .eq('id', id)
+        .select()
+        .then(({ data, error }) => {
+            if (error) throw error
+            return getTodos()
+        })
+        .then(() => {
+            showStatus('Todo oppdatert!', 'success')
+        })
+        .catch(error => {
+            console.error('Feil ved oppdatering av todo:', error)
+            showStatus('Feil ved oppdatering: ' + error.message, 'error')
+        })
 }
 
 // Slett todo fra Supabase (DELETE)
-async function deleteTodo(id) {
+function deleteTodo(id) {
     if (!confirm('Er du sikker på at du vil slette denne oppgaven?')) {
         return
     }
 
-    try {
-        const { data, error } = await supabase
-            .from(TABLE_NAME)
-            .delete()
-            .eq('id', id)
-
-        if (error) throw error
-
-        await getTodos()
-        showStatus('Todo slettet!', 'success')
-    } catch (error) {
-        console.error('Feil ved sletting av todo:', error)
-        showStatus('Feil ved sletting: ' + error.message, 'error')
-    }
+    supabase
+        .from(TABLE_NAME)
+        .delete()
+        .eq('id', id)
+        .then(({ data, error }) => {
+            if (error) throw error
+            return getTodos()
+        })
+        .then(() => {
+            showStatus('Todo slettet!', 'success')
+        })
+        .catch(error => {
+            console.error('Feil ved sletting av todo:', error)
+            showStatus('Feil ved sletting: ' + error.message, 'error')
+        })
 }
 
 // ==========================================
@@ -150,6 +152,14 @@ function showStatus(message, type) {
 }
 
 // ==========================================
+// GJØR FUNKSJONER TILGJENGELIGE GLOBALT
+// ==========================================
+window.addTodo = addTodo
+window.toggleTodo = toggleTodo
+window.deleteTodo = deleteTodo
+window.getTodos = getTodos
+
+// ==========================================
 // INITIALISERING
 // ==========================================
 
@@ -175,10 +185,3 @@ window.addEventListener('DOMContentLoaded', () => {
         getTodos()
     }
 })
-
-// ==========================================
-// GJØR FUNKSJONER TILGJENGELIGE GLOBALT
-// ==========================================
-window.addTodo = addTodo
-window.toggleTodo = toggleTodo
-window.deleteTodo = deleteTodo
