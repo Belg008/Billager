@@ -1,8 +1,8 @@
 // ==========================================
 // SUPABASE KONFIGURASJON
 // ==========================================
-const SUPABASE_URL = 'https://supabase.nopedal.me/'
-const SUPABASE_KEY = 'key'
+const SUPABASE_URL = 'https://cgdissrzxzywdldhhlhp.supabase.co'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnZGlzc3J6eHp5d2RsZGhobGhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2NTIxNzIsImV4cCI6MjA4NjIyODE3Mn0.p9E4m8CPv1jzqItXCTJyxJcx3bQYHm7IZZC0EP9vsg4'
 
 // Opprett Supabase klient
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
