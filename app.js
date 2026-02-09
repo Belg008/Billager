@@ -66,7 +66,6 @@ async function addTodo() {
     }
 }
 
-
 // Oppdater todo status i Supabase (UPDATE)
 async function toggleTodo(id, currentStatus) {
     try {
@@ -176,3 +175,10 @@ window.addEventListener('DOMContentLoaded', () => {
         getTodos()
     }
 })
+
+// ==========================================
+// GJØR FUNKSJONER TILGJENGELIGE GLOBALT
+// ==========================================
+window.addTodo = addTodo
+window.toggleTodo = toggleTodo
+window.deleteTodo = deleteTodo
