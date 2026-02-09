@@ -66,6 +66,7 @@ async function addTodo() {
     }
 }
 
+
 // Oppdater todo status i Supabase (UPDATE)
 async function toggleTodo(id, currentStatus) {
     try {
