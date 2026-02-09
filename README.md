@@ -88,36 +88,21 @@ const SUPABASE_KEY = 'eyJhbGc...'  // Din anon key
 - Marker som fullført
 - Slett en todo
 
-### Steg 6: Deploy til Coolify
+### Steg 6: Deploy til GitHub Pages
 
-1. Logg inn på Coolify
-2. Lag en ny ressurs > GitHub repository
-3. Velg din repo
-4. Konfigurer:
-   - **Type:** Static site / Simple Dockerfile
-   - **Build command:** (ikke nødvendig)
-   - **Publish directory:** `.` (root)
-5. Deploy
+1. Gå til din GitHub repository
+2. Klikk på **Settings** > **Pages**
+3. Under **Source**, velg:
+   - **Source:** Deploy from a branch
+   - **Branch:** main
+   - **Folder:** / (root)
+4. Klikk **Save**
+5. Vent noen minutter, og nettsiden vil være tilgjengelig på:
+   `https://<ditt-brukernavn>.github.io/<repo-navn>/`
 
-**Alternativ med enkel web-server:**
+**Alternativ: Automatisk deploy med GitHub Actions**
 
-Hvis Coolify krever en server, lag en `Dockerfile`:
-
-```dockerfile
-FROM nginx:alpine
-COPY . /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-Eller bruk Python:
-```dockerfile
-FROM python:3.9-alpine
-WORKDIR /app
-COPY . .
-EXPOSE 8000
-CMD ["python", "-m", "http.server", "8000"]
-```
+GitHub Actions er allerede konfigurert i dette prosjektet. Hver gang du pusher til main, vil nettsiden oppdateres automatisk.
 
 ## Demonstrasjonspunkter
 

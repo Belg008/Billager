@@ -56,12 +56,17 @@ Test:
 
 Vis at data dukker opp i Supabase Dashboard!
 
-## 5. Deploy til Coolify (2 min)
+## 5. Deploy til GitHub Pages (2 min)
 
-1. New Resource > Git Repository
-2. Velg repo
-3. Type: Dockerfile
-4. Deploy
+1. Push koden til GitHub (hvis ikke gjort allerede)
+2. Gå til repository Settings > Pages
+3. Under Source: velg "main" branch og "/" (root)
+4. Klikk Save
+
+Nettsiden vil være tilgjengelig på:
+`https://<brukernavn>.github.io/<repo-navn>/`
+
+**Eller bruk GitHub Actions:** Bare push til main, så deployes nettsiden automatisk!
 
 Ferdig!
 
@@ -84,6 +89,6 @@ ALTER TABLE todos DISABLE ROW LEVEL SECURITY;
 -- Legg inn testdata (valgfritt)
 INSERT INTO todos (title, completed) VALUES
   ('Test Supabase', false),
-  ('Deploy til Coolify', false),
+  ('Deploy til GitHub Pages', false),
   ('Vis frem CRUD', false);
 ```
