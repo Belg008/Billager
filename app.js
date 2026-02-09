@@ -1,18 +1,13 @@
-// ==========================================
-// SUPABASE KONFIGURASJON
-// ==========================================
+
 const SUPABASE_URL = 'https://cgdissrzxzywdldhhlhp.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnZGlzc3J6eHp5d2RsZGhobGhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2NTIxNzIsImV4cCI6MjA4NjIyODE3Mn0.p9E4m8CPv1jzqItXCTJyxJcx3bQYHm7IZZC0EP9vsg4'
 
 const TABLE_NAME = 'todos'
 
-// Initialiser Supabase klient
 const { createClient } = window.supabase
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-// ==========================================
-// CRUD FUNKSJONER
-// ==========================================
+
 
 async function getTodos() {
     try {
@@ -100,9 +95,7 @@ async function deleteTodo(id) {
     }
 }
 
-// ==========================================
-// UI FUNKSJONER
-// ==========================================
+
 
 function displayTodos(todos) {
     const todoList = document.getElementById('todoList')
@@ -140,7 +133,6 @@ function displayTodos(todos) {
         })
     })
 
-    // Legg til event listeners for slett-knapper
     document.querySelectorAll('[data-action="delete"]').forEach(button => {
         button.addEventListener('click', (e) => {
             const id = parseInt(e.target.dataset.id)
@@ -159,19 +151,17 @@ function showStatus(message, type) {
     }, 3000)
 }
 
-// ==========================================
-// INITIALISERING
-// ==========================================
+
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('App startet!')
     console.log('Supabase URL:', SUPABASE_URL)
     console.log('Tabellnavn:', TABLE_NAME)
 
-    // Legg til event listener for "Legg til" knappen
+
     const addButton = document.getElementById('addButton')
     if (addButton) {
         addButton.addEventListener('click', addTodo)
     }
 
-    // Legg til eve
+
