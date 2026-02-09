@@ -4,9 +4,11 @@
 const SUPABASE_URL = 'https://cgdissrzxzywdldhhlhp.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnZGlzc3J6eHp5d2RsZGhobGhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2NTIxNzIsImV4cCI6MjA4NjIyODE3Mn0.p9E4m8CPv1jzqItXCTJyxJcx3bQYHm7IZZC0EP9vsg4'
 
-let supabase
-
 const TABLE_NAME = 'todos'
+
+// Initialiser Supabase klient
+const { createClient } = window.supabase
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
 // ==========================================
 // CRUD FUNKSJONER
@@ -22,7 +24,6 @@ async function getTodos() {
         if (error) throw error
 
         displayTodos(data)
-        showStatus('Todos lastet inn!', 'success')
     } catch (error) {
         console.error('Feil ved henting av todos:', error)
         showStatus('Feil ved lasting av todos: ' + error.message, 'error')
@@ -164,9 +165,8 @@ function showStatus(message, type) {
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('App startet!')
-    
-    // Initialiser Supabase klient
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+    console.log('Supabase URL:', SUPABASE_URL)
+    console.log('Tabellnavn:', TABLE_NAME)
 
     // Legg til event listener for "Legg til" knappen
     const addButton = document.getElementById('addButton')
@@ -174,16 +174,4 @@ document.addEventListener('DOMContentLoaded', () => {
         addButton.addEventListener('click', addTodo)
     }
 
-    // Legg til event listener for Enter-tasten
-    const todoInput = document.getElementById('todoInput')
-    if (todoInput) {
-        todoInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                addTodo()
-            }
-        })
-    }
-
-    // Last inn todos
-    getTodos()
-})
+    // Legg til eve
